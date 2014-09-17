@@ -1,0 +1,14 @@
+<accordion close-others="oneAtATime">
+  <accordion-group data-ng-repeat="album in artist.albums | orderBy:'title'">
+    <accordion-heading>
+      {{album.title}}
+    </accordion-heading>
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <img width="200" height="200" data-ng-src="{{album.poster}}" alt="{{album.title}}">
+      </div>
+    </div>
+    <div class="row" data-ng-include="'template/tracks-list.html'">
+    </div>
+  </accordion-group>
+</accordion>

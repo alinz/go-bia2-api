@@ -1,0 +1,8 @@
+<accordion close-others="oneAtATime">
+  <accordion-group data-ng-repeat="artist in artists">
+    <accordion-heading>
+      {{artist.name}}
+    </accordion-heading>
+    <div data-ng-include="'template/albums-list.html'"></div>
+  </accordion-group>
+</accordion>

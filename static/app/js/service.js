@@ -4,8 +4,8 @@ angular.module("app.services")
   }])
   .factory("restCalls", ["$http", "restCallCache", function ($http, restCallCache) {
     return {
-      searchArtist: function (name) {
-        return $http.get("http://music.unilius.com/api/search/artist", {
+      search: function (name, type) {
+        return $http.get("http://music.unilius.com/api/search/" + type, {
           params: {
             q: name
           },

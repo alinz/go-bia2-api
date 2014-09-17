@@ -1,0 +1,22 @@
+<table class="table table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Track</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr data-ng-repeat="track in album.tracks">
+      <td>{{$index+1}}</td>
+      <td>{{track.name}}</td>
+      <td class="text-right">
+        <ul class="list-inline pull-right">
+          <li><button class="btn btn-info btn-xs"><i class="glyphicon glyphicon-plus"></i></button></li>
+          <li><button class="btn btn-info btn-xs"><i class="glyphicon glyphicon-th-list"></i></button></li>
+          <li><button class="btn btn-info btn-xs"><i class="glyphicon glyphicon-remove"></i></button></li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
