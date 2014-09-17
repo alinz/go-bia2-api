@@ -1,1 +1,0 @@
-angular.module("app").run(["$templateCache", function($templateCache) {$templateCache.put("template/temp1.html","<b>WOW</b>\n");}]);

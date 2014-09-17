@@ -23,15 +23,18 @@ func (a Controller) buildAudio(req gorelax.RelaxRequester, res gorelax.RelaxResp
 
 func (a Controller) searchArtistByName(req gorelax.RelaxRequester, res gorelax.RelaxResponser) {
 	artistName := req.Query("q")
+	res.EnableCORS()
 	res.SendAsJSON(service.SearchArtist(artistName), 200)
 }
 
 func (a Controller) searchAlbumByName(req gorelax.RelaxRequester, res gorelax.RelaxResponser) {
 	albumName := req.Query("q")
+	res.EnableCORS()
 	res.SendAsJSON(service.SearchAlbum(albumName), 200)
 }
 
 func (a Controller) searchTrackByName(req gorelax.RelaxRequester, res gorelax.RelaxResponser) {
 	trackName := req.Query("q")
+	res.EnableCORS()
 	res.SendAsJSON(service.SearchTrack(trackName), 200)
 }

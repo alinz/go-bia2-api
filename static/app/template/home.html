@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <input data-ng-model="search" type="text" class="form-control" placeholder="search">
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <accordion close-others="oneAtATime">
+        <accordion-group data-ng-repeat="artist in artists">
+          <accordion-heading>
+          {{artist.name}}
+          <div class="pull-right btn-group btn-group-xs">
+            <button class="btn btn-info btn-xs"><i class="glyphicon glyphicon-th-list"></i></button>
+          </div>
+        </accordion-heading>
+          This content is straight in the template.
+        </accordion-group>
+      </accordion>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>
