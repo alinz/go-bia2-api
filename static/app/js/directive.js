@@ -76,6 +76,7 @@ angular.module('app.directive')
 
     ChromeCast.prototype.receiverListener = function (e) {
       if (e === chrome.cast.ReceiverAvailability.AVAILABLE) {
+        this.iconAnimation(true);
         this.requestSession();
       } else {
         this.iconDisplay(false);
@@ -85,9 +86,6 @@ angular.module('app.directive')
 
     ChromeCast.prototype.requestSession = function () {
       var that = this;
-      that.scope.$apply(function () {
-        that.iconAnimation(true);
-      });
       chrome.cast.requestSession(function (session) {
         that.scope.$apply(function () {
           that.iconDisplay(true);
@@ -115,7 +113,10 @@ angular.module('app.directive')
       if (this.animationTimer && !enable) {
         $interval.cancel(this.animationTimer);
         this.animcationStart = null;
-      } else if (!this.animationTimer && enable) {
+      } else if (enable) {
+        if (this.animationTimer) {
+          $interval.cancel(this.animationTimer);
+        }
         scope = this.scope;
         this.animationTimer = $interval((function (index) {
           return function () {
@@ -159,9 +160,11 @@ angular.module('app.directive')
         function chromeCastApp() {
           switch (chromeCast.status) {
             case ChromeCast.Status.NOT_INITIALIZED:
+              chromeCast.iconAnimation(true);
               chromeCast.initialize();
               break;
             case ChromeCast.Status.NOT_CONNECTED:
+              chromeCast.iconAnimation(true);
               chromeCast.requestSession();
               break;
             case ChromeCast.Status.CONNECTED:
