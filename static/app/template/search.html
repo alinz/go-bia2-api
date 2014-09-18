@@ -1,0 +1,9 @@
+<div>
+  <h2>Search Persian Music</h2>
+  <input data-ng-model="targetModel.searchValue" data-ng-change="doSearchQuery()" type="text" class="form-control" placeholder="search">
+  <div class="btn-group">
+    <label class="btn btn-primary" data-ng-change="targetModel.doSearchQuery()" data-ng-model="targetModel.searchType" data-btn-radio="'artist'">Artist</label>
+    <label class="btn btn-primary" data-ng-change="targetModel.doSearchQuery()" data-ng-model="targetModel.searchType" data-btn-radio="'album'">Album</label>
+    <label class="btn btn-primary" data-ng-change="targetModel.doSearchQuery()" data-ng-model="targetModel.searchType" data-btn-radio="'track'">Track</label>
+  </div>
+</div>
