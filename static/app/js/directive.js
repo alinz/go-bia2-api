@@ -72,6 +72,18 @@ angular.module('app.directive')
       this.iconDisplay(true);
       this.scope.session = session;
       this.status = ChromeCast.Status.CONNECTED;
+      session.addUpdateListener(bind(this, this.sessionActiveStatus));
+    };
+
+    ChromeCast.prototype.sessionActiveStatus = function (isAlive) {
+      var that;
+      if (!isAlive) {
+        that = this;
+        this.scope.$apply(function () {
+          that.iconDisplay(false);
+          that.status = ChromeCast.Status.NOT_CONNECTED;
+        });
+      }
     };
 
     ChromeCast.prototype.receiverListener = function (e) {
@@ -81,7 +93,6 @@ angular.module('app.directive')
       } else {
         this.iconDisplay(false);
       }
-      console.log(e);
     };
 
     ChromeCast.prototype.requestSession = function () {
@@ -93,14 +104,15 @@ angular.module('app.directive')
         });
 
         that.status = ChromeCast.Status.CONNECTED;
+        session.addUpdateListener(bind(that, that.sessionActiveStatus));
       }, function (e) {
+        that.status = ChromeCast.Status.NOT_CONNECTED;
         that.iconDisplay(false);
       });
     };
 
-    ChromeCast.prototype.onInitSuccess = function (e) {
+    ChromeCast.prototype.onInitSuccess = function () {
       console.log("onInitSuccess");
-      console.log(e);
     };
 
     ChromeCast.prototype.onInitError = function (e) {
@@ -157,6 +169,8 @@ angular.module('app.directive')
       link: function (scope, element, attr) {
         var chromeCast;
 
+        scope.icon = "";
+
         function chromeCastApp() {
           switch (chromeCast.status) {
             case ChromeCast.Status.NOT_INITIALIZED:
@@ -175,13 +189,12 @@ angular.module('app.directive')
           }
         }
 
-        element.on('click', function () {
-          chromeCastApp();
-        });
-
         window['__onGCastApiAvailable'] = function(loaded, errorInfo) {
           if (loaded) {
             chromeCast = new ChromeCast(scope);
+            element.on('click', function () {
+              chromeCastApp();
+            });
             if (scope.policy === "APP_URL_TAB" || scope.policy === "APP_URL") {
               chromeCastApp();
             }
@@ -189,6 +202,19 @@ angular.module('app.directive')
             console.log(errorInfo);
           }
         };
+      }
+    };
+  }])
+  .directive("musicPlayer", [function () {
+    return {
+      restrict: "A",
+      scope: { },
+      template: '<img src="{{icon}}" alt="{{alt}}">',
+      controller: [function () {
+
+      }],
+      link: function (scope) {
+
       }
     };
   }]);
