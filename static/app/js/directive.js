@@ -22,6 +22,24 @@ angular.module('app.directive')
       this.iconDisplay(false);
     }
 
+    ChromeCast.prototype.loadMedia = function (url, title, thumb, type) {
+      var mediaInfo = new chrome.cast.media.MediaInfo(url);
+      mediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
+      mediaInfo.metadata.metadataType = chrome.cast.media.MetadataType.GENERIC;
+      mediaInfo.metadata.title = title;
+      mediaInfo.metadata.images = [{ url: thumb }];
+
+      mediaInfo.contentType = type || 'audio/mpeg3';
+
+      var request = new chrome.cast.media.LoadRequest(mediaInfo);
+      request.autoplay = true;
+      request.currentTime = 0;
+
+      this.scope.session.loadMedia(request, function (e) {
+        //console.log(e)
+      }, function (e) { console.log(e); });
+    };
+
     ChromeCast.prototype.parsePolicy = function () {
       var policy = chrome.cast.AutoJoinPolicy.PAGE_SCOPED;
 
@@ -40,7 +58,7 @@ angular.module('app.directive')
       }
 
       return policy;
-    }
+    };
 
     ChromeCast.prototype.initialize = function () {
       var sessionRequest = new chrome.cast.SessionRequest(this.scope.applicationId || chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID),
@@ -188,6 +206,12 @@ angular.module('app.directive')
               /* do nothing */
           }
         }
+
+        scope.$on("chromeCast:loadMedia", function (evt, options) {
+          if (chromeCast) {
+            chromeCast.loadMedia(options.streamUrl, options.title, options.thumb);
+          }
+        });
 
         window['__onGCastApiAvailable'] = function(loaded, errorInfo) {
           if (loaded) {

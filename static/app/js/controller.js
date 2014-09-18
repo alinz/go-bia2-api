@@ -1,7 +1,15 @@
 angular.module('app.controllers')
-  .controller("homeCtrl", ["$scope", "restCalls", function ($scope, restCalls) {
+  .controller("homeCtrl", ["$rootScope", "$scope", "restCalls", function ($rootScope, $scope, restCalls) {
     $scope.searchValue = "";
     $scope.searchType = "artist";
+
+    $scope.loadMedia = function (artist, album, track) {
+      $rootScope.$broadcast("chromeCast:loadMedia", {
+        streamUrl: track.stream_url,
+        thumb: album.poster,
+        title: artist.name + " : " + album.title + " : " + track.name
+      });
+    };
 
     $scope.doSearchQuery = function () {
       if ($scope.searchValue && $scope.searchValue.length > 0) {
