@@ -5,7 +5,8 @@ angular.module("app", [
   "ui.router",
   "ui.bootstrap",
   "app.services",
-  "app.controllers"
+  "app.controllers",
+  "app.directive"
 ])
 .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise("/home");
@@ -20,3 +21,4 @@ angular.module("app", [
 
 angular.module('app.controllers', []);
 angular.module('app.services', []);
+angular.module('app.directive', []);
